@@ -16,7 +16,7 @@ void display(int *res, int len, int isneg)
     char d;
     _Bool zero = 1;
 
-    if (isneg == 1)
+    if (isneg != 0)
         write(1, "-", 1);
     for (i = 0; i <= len; i++) {
         if (res[i] != 0 || i == len)
