@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <unistd.h>
+#include "include/infinadd.h"
 
 void display(int *res, int len, int isneg)
 {
@@ -18,7 +19,7 @@ void display(int *res, int len, int isneg)
     if (isneg == 1)
         write(1, "-", 1);
     for (i = 0; i <= len; i++) {
-        if (res[i] != 0)
+        if (res[i] != 0 || i == len)
             zero = 0;
         if (zero == 0) {
             d = (res[i] + '0');

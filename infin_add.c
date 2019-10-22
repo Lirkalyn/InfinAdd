@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
-#include "infin_add2.c"
+#include "include/infinadd.h"
 
 int isitneg(const char *av[], int len_num1, int len_num2, int *isneg)
 {
@@ -74,10 +74,8 @@ void infin_add(int ac, const char *av[])
     for (len_num2 = 0; av[2][len_num2] != '\0'; len_num2 += 1);
     len = (len_num1 > len_num2) ? len_num1 : len_num2;
     isitneg(av, len_num1, len_num2, &isneg);
-    if (isneg == 0 && av[1][0] == '-')
+    if (isneg == 0 && (av[1][0] == '-' || av[2][0] == '-'))
         isneg -= 1;
-    else if (isneg == 0 && av[2][0] == '-')
-        isneg -= 2;
     num1 = (int *)malloc(len * sizeof(int));
     num2 = (int *)malloc(len * sizeof(int));
     fill_0(len, num1, num2);
@@ -88,5 +86,8 @@ void infin_add(int ac, const char *av[])
 
 int main(int argc, const char *argv[])
 {
+    if (argv[1] == NULL || argv[2] == NULL)
+        return 84;
     infin_add(argc, argv);
+    return 0;
 }

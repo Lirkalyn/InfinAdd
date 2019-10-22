@@ -7,8 +7,7 @@
 
 #include <stdlib.h>
 #include <stddef.h>
-//#include <stdio.h>
-#include "display.c"
+#include "include/infinadd.h"
 
 int abs(int num)
 {
@@ -16,6 +15,19 @@ int abs(int num)
         return (num * (-1));
     else
         return num;
+}
+
+int inf(int *num1, int *num2, int len)
+{
+    int i;
+
+    for (i = 0; i < len; i++) {
+        if (abs(num1[i]) < abs(num2[i]))
+            return 1;
+        else if (abs(num2[i]) < abs(num1[i]))
+            return 2;
+    }
+    return 0;
 }
 
 int *add(int *num1, int *num2, int *res, int len)
@@ -52,15 +64,16 @@ int *sub(int *num1, int *num2, int *res, int len)
     }
     for (i = len; i >= 0; i--) {
         tmp = (num1[i] + num2[i] - carry[(i + 1)]);
-        if (tmp < 0 && (num1[i] > 0 || num2[i] > 0))
-            if (abs(num1[i]) < abs(num2[i])) {
+        if (tmp < 0 && (num1[i] > 0 || num2[i] > 0)) {
+            if (abs(num1[i]) < abs(num2[i]) && inf(num1, num2, len) != 1) {
                 tmp = ((num1[i] + 10) + num2[i] - carry[(i + 1)]);
                 carry[i] = 1;
             }
-            else if (abs(num2[i]) < abs(num1[i])) {
+            else if (abs(num2[i]) < abs(num1[i]) && inf(num1, num2, len) != 2) {
                 tmp = (num1[i] + (num2[i] + 10) - carry[(i + 1)]);
                 carry[i] = 1;
             }
+        }
         else if (abs(tmp) > 10) {
             tmp %= 10;
             carry[i] = 1;
