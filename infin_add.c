@@ -9,6 +9,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include "include/infinadd.h"
+#include <unistd.h>
 
 int isitneg(const char *av[], int len_num1, int len_num2, int *isneg)
 {
@@ -86,8 +87,10 @@ void infin_add(int ac, const char *av[])
 
 int main(int argc, const char *argv[])
 {
-    if (argv[1] == NULL || argv[2] == NULL)
+    if (argv[1] == NULL || argv[2] == NULL) {
+        write(2, "parameter missing\n", 18);
         return 84;
+    }
     infin_add(argc, argv);
     return 0;
 }
